@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nicaraguan Economic Transformation 2026</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Configuración Tailwind para Colores Personalizados -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        },
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos base para scrollbar oscura */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-btn.active {
+            background-color: #1e293b;
+            color: #34d399;
+            border-color: #334155;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen pb-10 selection:bg-emerald-500 selection:text-white">
+
+    <!-- Navbar -->
+    <nav class="border-b border-slate-800 bg-slate-900/95 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <div class="bg-emerald-600 p-2 rounded-lg">
+                        <i data-lucide="activity" class="h-6 w-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-white font-bold text-lg leading-tight hidden sm:block">
+                            Nicaraguan Economic Transformation
+                        </h1>
+                        <span class="text-emerald-400 text-xs font-semibold tracking-wider">
+                            2026 STRATEGIC OUTLOOK
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- Desktop Tabs -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <button onclick="switchTab('dashboard')" class="tab-btn active px-3 py-2 rounded-md text-sm font-medium border border-transparent hover:bg-slate-800 hover:text-white transition-colors">Dashboard</button>
+                        <button onclick="switchTab('economia')" class="tab-btn px-3 py-2 rounded-md text-sm font-medium border border-transparent text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Economía</button>
+                        <button onclick="switchTab('infraestructura')" class="tab-btn px-3 py-2 rounded-md text-sm font-medium border border-transparent text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Infraestructura</button>
+                        <button onclick="switchTab('social')" class="tab-btn px-3 py-2 rounded-md text-sm font-medium border border-transparent text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Social</button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button onclick="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-800">
+                        <i data-lucide="menu" class="h-6 w-6" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-800 border-b border-slate-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <button onclick="switchTab('dashboard')" class="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-700 w-full text-left">Dashboard</button>
+                <button onclick="switchTab('economia')" class="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-700 w-full text-left">Economía</button>
+                <button onclick="switchTab('infraestructura')" class="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-700 w-full text-left">Infraestructura</button>
+                <button onclick="switchTab('social')" class="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-700 w-full text-left">Social</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- KPI Cards (Always Visible) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+            <!-- KPI 1 -->
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg hover:border-slate-600 transition-all duration-300">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-slate-400 text-sm font-medium uppercase tracking-wider">Crecimiento PIB (2025)</p>
+                        <h3 class="text-2xl font-bold mt-2 text-slate-100">4.9%</h3>
+                    </div>
+                    <div class="p-3 rounded-lg bg-emerald-500 bg-opacity-20">
+                        <i data-lucide="trending-up" class="w-6 h-6 text-emerald-500"></i>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center text-sm">
+                    <i data-lucide="arrow-up-right" class="w-4 h-4 text-emerald-400 mr-1"></i>
+                    <span class="text-emerald-400 font-medium mr-2">Progreso</span>
+                    <span class="text-slate-400">Proyección 2026: 3.5% - 4.5%</span>
+                </div>
+            </div>
+
+            <!-- KPI 2 -->
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg hover:border-slate-600 transition-all duration-300">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-slate-400 text-sm font-medium uppercase tracking-wider">Cobertura Eléctrica</p>
+                        <h3 class="text-2xl font-bold mt-2 text-slate-100">99.5%</h3>
+                    </div>
+                    <div class="p-3 rounded-lg bg-yellow-500 bg-opacity-20">
+                        <i data-lucide="zap" class="w-6 h-6 text-yellow-500"></i>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center text-sm">
+                    <i data-lucide="arrow-up-right" class="w-4 h-4 text-emerald-400 mr-1"></i>
+                    <span class="text-emerald-400 font-medium mr-2">Progreso</span>
+                    <span class="text-slate-400">Desde 54% en 2006</span>
+                </div>
+            </div>
+
+            <!-- KPI 3 -->
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg hover:border-slate-600 transition-all duration-300">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-slate-400 text-sm font-medium uppercase tracking-wider">Red Vial Pavimentada</p>
+                        <h3 class="text-2xl font-bold mt-2 text-slate-100">6,000 km</h3>
+                    </div>
+                    <div class="p-3 rounded-lg bg-blue-500 bg-opacity-20">
+                        <i data-lucide="truck" class="w-6 h-6 text-blue-500"></i>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center text-sm">
+                    <i data-lucide="arrow-up-right" class="w-4 h-4 text-emerald-400 mr-1"></i>
+                    <span class="text-emerald-400 font-medium mr-2">Progreso</span>
+                    <span class="text-slate-400">147/153 Municipios</span>
+                </div>
+            </div>
+
+            <!-- KPI 4 -->
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg hover:border-slate-600 transition-all duration-300">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-slate-400 text-sm font-medium uppercase tracking-wider">Agua Potable</p>
+                        <h3 class="text-2xl font-bold mt-2 text-slate-100">94.5%</h3>
+                    </div>
+                    <div class="p-3 rounded-lg bg-cyan-500 bg-opacity-20">
+                        <i data-lucide="droplets" class="w-6 h-6 text-cyan-500"></i>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center text-sm">
+                    <i data-lucide="arrow-up-right" class="w-4 h-4 text-emerald-400 mr-1"></i>
+                    <span class="text-emerald-400 font-medium mr-2">Progreso</span>
+                    <span class="text-slate-400">Meta 2026: 98%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ECONOMY SECTION -->
+        <div id="section-dashboard" class="tab-content fade-in space-y-8">
+            <div id="section-economia-content">
+                <!-- Title -->
+                <div class="mb-6">
+                    <h2 class="text-xl font-bold text-slate-100 flex items-center gap-2">
+                        <div class="h-6 w-1 bg-emerald-500 rounded-full"></div>
+                        Perspectivas Económicas
+                    </h2>
+                    <p class="text-slate-400 text-sm ml-3 mt-1">Análisis macroeconómico y proyecciones estratégicas</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Chart: Projections -->
+                    <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-sm col-span-1 lg:col-span-2">
+                        <h3 class="text-lg font-semibold text-slate-100 mb-6">Proyecciones Macroeconómicas 2026 vs Actual</h3>
+                        <div class="relative h-72 w-full">
+                            <canvas id="chartEconomy"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Data Card: Economy -->
+                    <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-sm">
+                        <h3 class="text-lg font-semibold text-slate-100 mb-4 flex items-center gap-2">
+                            <i data-lucide="info" class="w-5 h-5 text-emerald-400"></i>
+                            Datos Clave 2025-2026
+                        </h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center py-2 border-b border-slate-700 last:border-0">
+                                <span class="text-slate-400 text-sm">Pobreza General (2005→2016)</span>
+                                <span class="text-slate-200 font-semibold text-sm">48.3% → 24.9%</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-slate-700 last:border-0">
+                                <span class="text-slate-400 text-sm">Reservas Int. (2025)</span>
+                                <span class="text-slate-200 font-semibold text-sm">> $8,325 M</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-slate-700 last:border-0">
+                                <span class="text-slate-400 text-sm">Deslizamiento Cambiario</span>
+                                <span class="text-slate-200 font-semibold text-sm">0%</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-slate-700 last:border-0">
+                                <span class="text-slate-400 text-sm">Tasa Desempleo (2025)</span>
+                                <span class="text-slate-200 font-semibold text-sm">2.4%</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-slate-700 last:border-0">
+                                <span class="text-slate-400 text-sm">Deuda/PIB</span>
+                                <span class="text-slate-200 font-semibold text-sm">51.7%</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 p-4 bg-slate-700/50 rounded-lg border border-slate-600">
+                            <p class="text-xs text-slate-300 italic">
+                                "Las políticas han permitido un crecimiento sostenido y la protección del poder adquisitivo." - BCN
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INFRASTRUCTURE SECTION -->
+        <div id="section-infraestructura" class="tab-content hidden fade-in mt-12 space-y-8">
+            <div class="mb-6">
+                <h2 class="text-xl font-bold text-slate-100 flex items-center gap-2">
+                    <div class="h-6 w-1 bg-emerald-500 rounded-full"></div>
+                    Infraestructura Estratégica
+                </h2>
+                <p class="text-slate-400 text-sm ml-3 mt-1">Vialidad, Energía y Recursos Hídricos</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Chart: Roads -->
+                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-sm">
+                    <h3 class="text-lg font-semibold text-slate-100 mb-4">Expansión Red Vial (km)</h3>
+                    <div class="h-64 relative">
+                        <canvas id="chartRoads"></canvas>
+                    </div>
+                    <p class="text-sm text-center text-slate-400 mt-2">Inversión acumulada: $1,434.7 Millones</p>
+                </div>
+
+                <!-- Chart: Water -->
+                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-sm">
+                    <h3 class="text-lg font-semibold text-slate-100 mb-4">Cobertura Agua Potable (%)</h3>
+                    <div class="h-64 relative">
+                        <canvas id="chartWater"></canvas>
+                    </div>
+                    <p class="text-sm text-center text-slate-400 mt-2">Meta 2030: 99.1% cobertura nacional</p>
+                </div>
+
+                <!-- Chart: Energy -->
+                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-sm">
+                    <h3 class="text-lg font-semibold text-slate-100 mb-4">Matriz Energética 2024</h3>
+                    <div class="h-64 relative flex items-center justify-center">
+                        <canvas id="chartEnergy"></canvas>
+                        <!-- Center Label Overaly for Donut -->
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                            <span class="text-3xl font-bold text-white mt-4">70%</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-center text-slate-400 mt-[-10px]">Generación Renovable</p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SOCIAL SECTION -->
+        <div id="section-social" class="tab-content hidden fade-in mt-12 space-y-8">
+            <div class="mb-6">
+                <h2 class="text-xl font-bold text-slate-100 flex items-center gap-2">
+                    <div class="h-6 w-1 bg-emerald-500 rounded-full"></div>
+                    Desarrollo Social
+                </h2>
+                <p class="text-slate-400 text-sm ml-3 mt-1">Salud Pública y Educación Técnica</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Health Card -->
+                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-sm flex flex-col">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="p-3 bg-rose-500/20 rounded-lg">
+                            <i data-lucide="heart-pulse" class="w-6 h-6 text-rose-500"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-100">Salud Pública</h3>
+                            <p class="text-sm text-slate-400">Modelo de Salud Familiar y Comunitario</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-slate-700/30 p-4 rounded-lg text-center">
+                            <span class="block text-3xl font-bold text-slate-100">77</span>
+                            <span class="text-xs text-slate-400 uppercase">Hospitales (2025)</span>
+                            <span class="text-xs text-emerald-400 block mt-1">vs 33 en 2007</span>
+                        </div>
+                        <div class="bg-slate-700/30 p-4 rounded-lg text-center">
+                            <span class="block text-3xl font-bold text-slate-100">-80%</span>
+                            <span class="text-xs text-slate-400 uppercase">Mortalidad Materna</span>
+                            <span class="text-xs text-slate-500 block mt-1">2006-2024</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-auto">
+                        <h4 class="text-sm font-semibold text-slate-300 mb-2">Avances Clave:</h4>
+                        <ul class="space-y-2 text-sm text-slate-400">
+                            <li class="flex items-start gap-2">
+                                <span class="text-emerald-500 mt-1">•</span>
+                                Construcción de 182 Casas Maternas.
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-emerald-500 mt-1">•</span>
+                                Red hospitalaria más grande de Centroamérica.
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-emerald-500 mt-1">•</span>
+                                Presupuesto Salud: +254% (2007-2022).
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Education Card -->
+                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-sm flex flex-col">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="p-3 bg-indigo-500/20 rounded-lg">
+                            <i data-lucide="graduation-cap" class="w-6 h-6 text-indigo-500"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-100">Educación Técnica</h3>
+                            <p class="text-sm text-slate-400">INATEC y Estrategia Bendiciones y Victorias</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-slate-700/30 p-4 rounded-lg text-center">
+                            <span class="block text-3xl font-bold text-slate-100">581k</span>
+                            <span class="text-xs text-slate-400 uppercase">Matrícula Anual</span>
+                            <span class="text-xs text-emerald-400 block mt-1">vs 48k en 2007</span>
+                        </div>
+                        <div class="bg-slate-700/30 p-4 rounded-lg text-center">
+                            <span class="block text-3xl font-bold text-slate-100">71</span>
+                            <span class="text-xs text-slate-400 uppercase">Centros Tecnológicos</span>
+                            <span class="text-xs text-emerald-400 block mt-1">Cobertura 153 municipios</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-auto">
+                        <h4 class="text-sm font-semibold text-slate-300 mb-2">Proyecciones 2026:</h4>
+                        <ul class="space-y-2 text-sm text-slate-400">
+                            <li class="flex items-start gap-2">
+                                <span class="text-indigo-500 mt-1">•</span>
+                                Oferta de 79 carreras técnicas.
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-indigo-500 mt-1">•</span>
+                                Integración del idioma Inglés transversal.
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-indigo-500 mt-1">•</span>
+                                Inauguración Taller Lubán (Alianza China).
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-7xl mx-auto px-4 py-6 border-t border-slate-800 text-center">
+        <p class="text-slate-500 text-sm">
+            © 2026 Dashboard Informativo. Fuente: Informes BCN, INATEC, MINSA, MTI y ENACAL.
+        </p>
+    </footer>
+
+    <!-- LOGIC SCRIPT -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                // Replace menu icon with X (logically managed, Lucide needs re-render)
+                // For simplicity in Vanilla we just toggle visibility
+            } else {
+                menu.classList.add('hidden');
+            }
+        }
+
+        // Tab Switching Logic
+        function switchTab(tabName) {
+            // Hide all main sections
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // Logic for grouping
+            if (tabName === 'dashboard') {
+                document.getElementById('section-dashboard').classList.remove('hidden');
+                document.getElementById('section-infraestructura').classList.remove('hidden');
+                document.getElementById('section-social').classList.remove('hidden');
+                // Reset economy content to visible in case it was hidden by specific logic (not needed here but good practice)
+                document.getElementById('section-economia-content').classList.remove('hidden');
+            } else if (tabName === 'economia') {
+                document.getElementById('section-dashboard').classList.remove('hidden');
+            } else {
+                const target = document.getElementById('section-' + tabName);
+                if (target) target.classList.remove('hidden');
+            }
+
+            // Specific logic: Since "Dashboard" view in the React app showed EVERYTHING or Specific views, 
+            // lets replicate the "Filter" behavior.
+            // Actually, in the HTML structure above, I wrapped Economy in 'section-dashboard' which might be confusing.
+            // Let's refine the display logic based on IDs directly.
+            
+            const sEco = document.getElementById('section-dashboard'); // Using this container for Economy
+            const sInf = document.getElementById('section-infraestructura');
+            const sSoc = document.getElementById('section-social');
+
+            if (tabName === 'dashboard') {
+                sEco.classList.remove('hidden');
+                sInf.classList.remove('hidden');
+                sSoc.classList.remove('hidden');
+            } else if (tabName === 'economia') {
+                sEco.classList.remove('hidden');
+                sInf.classList.add('hidden');
+                sSoc.classList.add('hidden');
+            } else if (tabName === 'infraestructura') {
+                sEco.classList.add('hidden');
+                sInf.classList.remove('hidden');
+                sSoc.classList.add('hidden');
+            } else if (tabName === 'social') {
+                sEco.classList.add('hidden');
+                sInf.classList.add('hidden');
+                sSoc.classList.remove('hidden');
+            }
+
+            // Update Button States
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'text-emerald-400', 'bg-slate-800');
+                btn.classList.add('text-slate-400');
+                
+                // Simple check if button text matches tab (approximate)
+                if(btn.innerText.toLowerCase() === tabName) {
+                     btn.classList.add('active', 'text-emerald-400', 'bg-slate-800');
+                     btn.classList.remove('text-slate-400');
+                }
+            });
+            
+            // Close mobile menu if open
+            document.getElementById('mobile-menu').classList.add('hidden');
+        }
+
+        // --- CHARTS CONFIGURATION (Chart.js) ---
+        
+        // Common Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'sans-serif';
+
+        // 1. Economy Chart (Bar)
+        new Chart(document.getElementById('chartEconomy'), {
+            type: 'bar',
+            data: {
+                labels: ['Crecimiento PIB', 'Desempleo', 'Inflación'],
+                datasets: [
+                    {
+                        label: 'Actual 2025 (%)',
+                        data: [4.9, 2.4, 2.8],
+                        backgroundColor: '#10b981',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Meta Mínima 2026 (%)',
+                        data: [3.5, 3.0, 2.5],
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                },
+                scales: {
+                    x: { grid: { color: '#334155' } },
+                    y: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 2. Roads Chart (Line/Area)
+        new Chart(document.getElementById('chartRoads'), {
+            type: 'line',
+            data: {
+                labels: ['2007', '2025'],
+                datasets: [{
+                    label: 'Kilómetros Pavimentados',
+                    data: [2044, 6000],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { grid: { color: '#334155' }, min: 0 },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 3. Water Chart (Stepped Line)
+        new Chart(document.getElementById('chartWater'), {
+            type: 'line',
+            data: {
+                labels: ['2006', '2024', '2026 (Est)', '2030 (Meta)'],
+                datasets: [{
+                    label: 'Cobertura %',
+                    data: [65, 94.5, 98, 99.1],
+                    borderColor: '#06b6d4',
+                    borderWidth: 3,
+                    stepped: true,
+                    pointBackgroundColor: '#06b6d4',
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { grid: { color: '#334155' }, min: 50, max: 100 },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 4. Energy Chart (Doughnut)
+        new Chart(document.getElementById('chartEnergy'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Renovable', 'No Renovable'],
+                datasets: [{
+                    data: [70, 30],
+                    backgroundColor: ['#10b981', '#64748b'],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '75%',
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+
+        // Set Initial Active Tab State
+        switchTab('dashboard');
+    </script>
+</body>
+</html>
